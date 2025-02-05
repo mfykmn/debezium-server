@@ -1,0 +1,55 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlrootpassword
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: mysqlpassword
+      MYSQL_DATABASE: test_cdc
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+  debezium-server:
+    image: "quay.io/debezium/server:latest"
+    container_name: debezium-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./debezium/config:/debezium/config
+      - ./debezium/data:/debezium/data
+    depends_on:
+      - mysql
+  zookeeper:
+    image: "bitnami/zookeeper:latest"
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: "bitnami/kafka:latest"
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      - KAFKA_CFG_BROKER_ID=1
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,PLAINTEXT_HOST://:29092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://127.0.0.1:29092
+    depends_on:
+      - zookeeper
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop
+    restart: always
+    environment:
+      - KAFKA_BROKERCONNECT=kafka:9092
+    ports:
+      - "9000:9000"
+    depends_on:
+      - kafka
