@@ -35,18 +35,25 @@
     ```
 6. kafka-connectを起動
     ```shell
-    docker compose up -d connect
+    docker compose up -d kafka-connect
+    docker logs kafka-connect # 起動に時間がかかるのでログを見て起動したか確認する
     ```
-7. データ挿入
+7. Snowflake sink connectorを登録
+    ```shell
+    curl -XPOST http://localhost:8083/connectors -H "Content-Type: application/json" -d@kafka-connect/config/SF_connect.json
+    curl -XGET http://localhost:8083/connectors # コネクタの登録ができているか確認
+    ["snowflake-sink-connector"]
+    ```
+8. データ挿入
     ```shell
     docker compose exec mysql bash -c 'mysql -u mysqluser -pmysqlpassword test_cdc'
     mysql > INSERT INTO customers (name) VALUES ("snowflake");
     ```
 
 // TODO
-- sd-connext.propertiesの設定が効いているかどうか
-- kafkaからsnowflakeにsinkする設定が効いているかどうか
 - snowflakeのDB、スキーマ、テーブル、権限など設定ができているか
+- kafka connectのスタンドアローンモードと分散モード
+- Avroとスキーマレジストラ
 
 ## 参考リンク
 ### Debezium
@@ -75,3 +82,5 @@
 - https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink/cc-snowflake-sink.html  
 - https://github.com/snowflakedb/snowflake-kafka-connector/tree/master
 - https://docs.confluent.io/confluent-cli/current/command-reference/connect/cluster/confluent_connect_cluster_create.html
+- コネクターの追加
+  - https://docs.confluent.io/platform/current/connect/references/restapi.html#post--connectors

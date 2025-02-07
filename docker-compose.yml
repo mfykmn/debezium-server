@@ -53,10 +53,10 @@ services:
       - "9000:9000"
     depends_on:
       - kafka
-  connect:
+  kafka-connect:
     image: confluentinc/cp-kafka-connect:latest
     hostname: connect
-    container_name: kafka-connector
+    container_name: kafka-connect
     ports:
       - "8083:8083"
     volumes:
