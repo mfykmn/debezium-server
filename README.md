@@ -24,7 +24,7 @@
     docker compose exec mysql bash -c 'mysql -u mysqluser -pmysqlpassword test_cdc'
     mysql > INSERT INTO customers (name) VALUES ("fuga");
     ```
-3. データ挿入した変更点がKafkaに流れているのか確認
+5. データ挿入した変更点がKafkaに流れているのか確認
     ```shell
     open http://localhost:9000/
 
@@ -32,6 +32,10 @@
 
     docker exec -it kafka kafka-topics.sh --list --bootstrap-server kafka:9092
     docker exec -it kafka kafka-console-consumer.sh --bootstrap-server kafka:9092 --from-beginning --topic mysql.test_cdc.customers
+    ```
+6. kafka-connectを起動
+    ```shell
+    docker compose up -d connect
     ```
 
 ## 参考リンク
@@ -43,11 +47,6 @@
     Kafkaにsinkする場合の資料
 
 ### Snowflake
-#### Snowflake Sink Connect
-- https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink/cc-snowflake-sink.html  
-- https://github.com/snowflakedb/snowflake-kafka-connector/tree/master
-#### Kafka Connector with Snowpipe Streaming
-  - https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-kafka
 #### KafkaConnector
 - Snowflakeにsinkする場合の資料
   - https://docs.snowflake.com/en/user-guide/kafka-connector
@@ -58,3 +57,11 @@
   - https://mvnrepository.com/artifact/com.snowflake/snowflake-kafka-connector
 - Kafkaコネクタの設定
   - https://docs.snowflake.com/en/user-guide/kafka-connector-install#configuring-the-kafka-connector
+- 使っているDockerImage参考
+  - https://hub.docker.com/r/confluentinc/cp-kafka-connect
+#### Kafka Connector with Snowpipe Streaming
+  - https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-kafka
+#### Snowflake Sink Connect
+- https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink/cc-snowflake-sink.html  
+- https://github.com/snowflakedb/snowflake-kafka-connector/tree/master
+- https://docs.confluent.io/confluent-cli/current/command-reference/connect/cluster/confluent_connect_cluster_create.html
