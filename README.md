@@ -35,9 +35,21 @@
     ```
 
 ## 参考リンク
+### Debezium Server
 - https://debezium.io/documentation/reference/stable/operations/debezium-server.html
 - https://github.com/debezium/debezium-examples/tree/main/debezium-server
 - https://debezium.io/documentation/reference/stable/operations/debezium-server.html#_apache_kafka
     Kafkaにsinkする場合の資料
-
-
+### Snowflake Sink Connect
+- https://docs.snowflake.com/en/user-guide/kafka-connector
+    Snowflakeにsinkする場合の資料
+- https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink/cc-snowflake-sink.html
+    Snowflake Sink Connector
+- https://github.com/snowflakedb/snowflake-kafka-connector/tree/master
+- https://docs.snowflake.com/en/user-guide/kafka-connector-install
+- https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-kafka
+  Kafka Connector with Snowpipe Streaming
+- https://www.confluent.io/hub/snowflakeinc/snowflake-kafka-connector
+  Snowflake Sink Connector
+- https://mvnrepository.com/artifact/com.snowflake/snowflake-kafka-connector  
+  Snowflake Sink Connector(OSS)
