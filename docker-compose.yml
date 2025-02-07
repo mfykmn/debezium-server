@@ -10,7 +10,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./source-db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
   debezium-server:
     image: "quay.io/debezium/server:latest"
     container_name: debezium-server

@@ -37,6 +37,16 @@
     ```shell
     docker compose up -d connect
     ```
+7. データ挿入
+    ```shell
+    docker compose exec mysql bash -c 'mysql -u mysqluser -pmysqlpassword test_cdc'
+    mysql > INSERT INTO customers (name) VALUES ("snowflake");
+    ```
+
+// TODO
+- sd-connext.propertiesの設定が効いているかどうか
+- kafkaからsnowflakeにsinkする設定が効いているかどうか
+- snowflakeのDB、スキーマ、テーブル、権限など設定ができているか
 
 ## 参考リンク
 ### Debezium
