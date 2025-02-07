@@ -1,0 +1,25 @@
+{
+    "name": "snowflake-sink-connector",
+    "config": {
+        "connector.class": "com.snowflake.kafka.connector.SnowflakeSinkConnector",
+        "topics": "mysql.test_cdc.customers",
+        "snowflake.url.name": "https://${account_identifier}.snowflakecomputing.com",
+        "snowflake.user.name": "jane.smith",
+        "snowflake.private.key": "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7X4GVXpyzJ+qPA4cDI5SUpz5i+H3H+dy1gniKwsBU8Zwv3PDCF5pZu14mBcDhOcSIxOnT4rspr0COQqrv4ED9EHVRCr/thZ+hL/XNmki7nHsIhDqJkA1RDYgsE5gsrf17e5B5zHtjXgINcledYWCOl1XoIBWFahLjwp6i4f+7SQ30PI5yTtyX40ml7OPh+FQ7b7nUsRLwVlgnKxBHkyzLDQENeGzcvtNFwSEAq9nDOKzlgVofbkKdYoy4DiU5skgITr8C7JBjN0kzFfKv7cFDqwrL6w/e5/JhJR0tAF4JYpM81QGa97CTOgOJkRW2wnduTV9huMRRCa+J7WZMhAIfAgMBAAECggEAV3TpGYybLH41m8IkOwFZARec5Xohz3zfGTOISxBC0IMjiS2hjJ6Ss05iz/GAiT+67bGniHg8LuU3hw80FRnBi70qXQTc96MWkpg9rVVVnIgZ3yxE3F+J76qWxCfzL+uYNJJEqa0ZbJR89cTIg1Nny7Z0aQ/Mq8SKg5ecDt/YyxOtsUAfk0afln8xgAbWPm0uadAXvfk6DSk+cI3z6clAsEzIf8cg5J9ZeIglY0hXPeIgDgO/v8gvVY2R7ttBKhaYoZ9snbgwx3BalX8DS8sHQrbLgT/I98MuoUPW1e/aFa6aMXylAXyXa3+tktyoms3U/m/7MadzXIsHA4QFLLX5eQKBgQDsGKuB+piOCNn4669xUDp+5+Ffcb4hrpXtArl2+w9JF4PWgMa9/f0b205f0xkewi7j30gB0Gd5hDTdQ+cEW+HyCCSntJuFvgg75i5i5hm5i/SKrn/fDgntMEVq17lC01mIF5qFy5aSl75cA51xT1g+IMIeXquMtz2azSAjbDonuQKBgQDLK0+hbjDcqVEHQVYLrQQwC4754VLXXDpy1cXfrvLZORhWrZ7RdOadNas9tjj7fAQS8gxbFj+Uey7eo1sg1qbsw6cZaNSwNtSgPyl6DDL7qhZ/gxGmccDuUbas+Ycx7ZnfUAliKZuQ8emSGk4UsZwcybFAdEowRhv5XeCgD800lwKBgBjeNFp5gc4cIpF0icM+txqc5AFAos07bXFMgyqEIUUKpAlZARYMBbgEbonrW08BFx1LbHM8d1m2UjcoKtIrt23d67Z6cJMyw/1DLomeQQFpO3XMEY32FZeVKQqq9EmUp26NRepn2lFQiG16t/+yYtIQc0HtqNYmiueeSY9RnAKJAoGBAMVfPw3RkZBcwIXu2BuhqmbOY8inOCZVx8ZVnNRwDiYvDFDwfFB5Y6woPkJGa1cMpJyPHqfClmO1w9OwGNBvF1z9ubC6oZzKt4cxtSaHAWRxWUfo2dW7vrUHFxM1mjxL2ecSxvrg9us5yDIScfYykTl6S0MVdhktkvGPXK/CihTjAoGAE5guFKorh92G7um6X7A6YYc9+1sWHe3Pk7Qffk4flBntS6go96yogb89dRK8tD0euNPpT9MR8Tp6BT3z/Q7nGImmH6d3N0v35O2TsC00RhFHhNo+llLdqfkCxR/sm0nBvZxiA9mIXssta0Vm17VPwONxzpuRQU+kf4jE2e14VRw=",
+        "snowflake.database.name":"kafka_db",
+        "snowflake.schema.name": "kafka_schema",
+        "tasks.max": 1,
+        "snowflake.topic2table.map": "mysql.test_cdc.customers:customers",
+        "snowflake.role.name": "kafka_connector_role_1",
+        "enable.streaming.client.optimization": true,
+        "buffer.flush.time": 1,
+        "buffer.count.records": 2,
+        "buffer.size.bytes": 10000000,
+        "snowflake.streaming.max.client.lag": 120,
+        "snowflake.streaming.enable.single.buffer": true,
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "snowflake.ingestion.method": "SNOWPIPE_STREAMING",
+        "snowflake.enable.schematization" : true
+    }
+}
