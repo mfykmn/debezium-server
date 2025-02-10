@@ -38,32 +38,32 @@
 1. kafka-connectを起動
     ```shell
     docker compose up -d kafka-connect
-    docker logs kafka-connect -f # 起動に時間がかかるのでログを見て起動したか確認する
+    docker logs kafka-connect -f # 起動に時間がかかるのでログを見て起動したか確認する "GET /connectors HTTP/1.1" 200" のようなログがでてきたら次の作業に移る
     ```
 2. Snowflake sink connectorを登録
 #### Snowpipe Streaming(ストリーミング)の場合はこちら
 ```shell
-curl -XPOST http://localhost:8083/connectors -H "Content-Type: application/json"-d@kafka-connect/config/SF_streaming.json
+curl -XPOST http://localhost:8083/connectors -H "Content-Type: application/json" -d @kafka-connect/config/SF_streaming.json
 curl -XGET http://localhost:8083/connectors # コネクタの登録ができているか確認
 ["snowflake-sink-connector"]
 ```
 #### Snowpipe Batch(バッチ)の場合はこちら
 ```shell
-curl -XPOST http://localhost:8083/connectors -H "Content-Type: application/json"-d@kafka-connect/config/SF_batch.json
+curl -XPOST http://localhost:8083/connectors -H "Content-Type: application/json" -d @kafka-connect/config/SF_batch.json
 curl -XGET http://localhost:8083/connectors # コネクタの登録ができているか確認
 ["snowflake-sink-connector"]
 ```
 
 ※もし失敗してやり直したい場合はdocker storageのデータを削除する
 
-3. データ挿入
+3. データ挿入してsnowflakeにデータが流れているか確認
     ```shell
     docker compose exec mysql bash -c 'mysql -u mysqluser -pmysqlpassword test_cdc'
     mysql > INSERT INTO customers (name) VALUES ("snowflake");
+    open https://app.snowflake.com/ # 見たいテーブルまで行き、テーブルの権限を確認し問題なければ DataPreviewで確認する
     ```
 
-// TODO
-- snowflakeのDB、スキーマ、テーブル、権限など設定ができているか
+## TODO
 - kafka connectのスタンドアローンモードと分散モード
 - Avroとスキーマレジストラ
 
