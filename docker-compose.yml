@@ -59,9 +59,6 @@ services:
     container_name: kafka-connect
     ports:
       - "8083:8083"
-    volumes:
-      #- ./kafka-connect/jars:/etc/kafka-connect/jars
-      - ./kafka-connect/config/SF_connect.properties:/etc/kafka/SF_connect.properties
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'kafka:9092'
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
