@@ -64,36 +64,39 @@ curl -XGET http://localhost:8083/connectors # コネクタの登録ができて�
     ```
 
 ## TODO
+- 今はJsonがそのまま入ってるけどDBスキーマの形でいれたい(調査中)
+- スキーマ変更にどうやって追従するか(調査中)
+- 画面orAPIからコネクタ登録できるようにする
+  - コネクタのAPIに付いて調査、更新や削除の仕方
 - kafka connectのスタンドアローンモードと分散モード
 - Avroとスキーマレジストラ
 
 ## 参考リンク
 ### Debezium
 #### Debezium Server
-- https://debezium.io/documentation/reference/stable/operations/debezium-server.html
-- https://github.com/debezium/debezium-examples/tree/main/debezium-server
-- https://debezium.io/documentation/reference/stable/operations/debezium-server.html#_apache_kafka
-    Kafkaにsinkする場合の資料
+- [Debezium Server](https://debezium.io/documentation/reference/stable/operations/debezium-server.html)
+- [example例](https://github.com/debezium/debezium-examples/tree/main/debezium-server)
+- [Kafkaにproduceする場合の資料](https://debezium.io/documentation/reference/stable/operations/debezium-server.html#_apache_kafka)
 
 ### Snowflake
-#### KafkaConnector
-- Snowflakeにsinkする場合の資料
-  - https://docs.snowflake.com/en/user-guide/kafka-connector
-- 一連の設定方法などが全部書いてある
-  - https://docs.snowflake.com/en/user-guide/kafka-connector-install
-- Kafkaコネクタファイルのダウンロード先
+#### Kafka Connect
+- [API](https://docs.confluent.io/platform/current/connect/references/restapi.html)
+- [DockerImage](https://hub.docker.com/r/confluentinc/cp-kafka-connect)
+- [コネクターの登録はCLIからもできる](https://docs.confluent.io/confluent-cli/current/command-reference/connect/cluster/confluent_connect_cluster_create.html)
+#### Snowflake Sink Connect
+- [Snowflakeにsinkする場合の資料](https://docs.snowflake.com/en/user-guide/kafka-connector)
+- [一連の設定方法などが全部書いてある](https://docs.snowflake.com/en/user-guide/kafka-connector-install)
+- KafkaコネクターJarファイルのダウンロード先
   - https://www.confluent.io/hub/snowflakeinc/snowflake-kafka-connector
   - https://mvnrepository.com/artifact/com.snowflake/snowflake-kafka-connector
-- Kafkaコネクタの設定
-  - https://docs.snowflake.com/en/user-guide/kafka-connector-install#configuring-the-kafka-connector
-- 使っているDockerImage参考
-  - https://hub.docker.com/r/confluentinc/cp-kafka-connect
-#### Kafka Connector with Snowpipe Streaming
-  - https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-kafka
-  - https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-recommendation
-#### Snowflake Sink Connect
-- https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink/cc-snowflake-sink.html  
-- https://github.com/snowflakedb/snowflake-kafka-connector/tree/master
-- https://docs.confluent.io/confluent-cli/current/command-reference/connect/cluster/confluent_connect_cluster_create.html
-- コネクターの追加
-  - https://docs.confluent.io/platform/current/connect/references/restapi.html#post--connectors
+- [Snowflake Sink Connector for Confluent Cloud](https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink/cc-snowflake-sink.html)
+- [DockerCompose作成の参考](https://github.com/snowflakedb/snowflake-kafka-connector/tree/master)
+
+
+##### Kafka Connector with Snowpipe(Batch)
+  - [設定値について](https://docs.snowflake.com/en/user-guide/kafka-connector-install#configuring-the-kafka-connector)
+##### Kafka Connector with Snowpipe Streaming
+  - [Streamingで使用する設定値について](https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-kafka)
+  - [Snowpipe Streaming best practices
+](https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-recommendation)
+
