@@ -86,7 +86,7 @@ curl -XGET http://localhost:8083/connectors # コネクタの登録ができて�
 #### Snowflake Sink Connect
 - [Snowflakeにsinkする場合の資料](https://docs.snowflake.com/en/user-guide/kafka-connector)
 - [一連の設定方法などが全部書いてある](https://docs.snowflake.com/en/user-guide/kafka-connector-install)
-- KafkaコネクターJarファイルのダウンロード先
+- KafkaコネクタープラグインのJarダウンロード先
   - https://www.confluent.io/hub/snowflakeinc/snowflake-kafka-connector
   - https://mvnrepository.com/artifact/com.snowflake/snowflake-kafka-connector
 - [Snowflake Sink Connector for Confluent Cloud](https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink/cc-snowflake-sink.html)
