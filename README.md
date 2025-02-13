@@ -35,6 +35,9 @@
     docker exec -it kafka kafka-console-consumer.sh --bootstrap-server kafka:9092 --from-beginning --topic mysql.test_cdc.customers
     ```
 ###  kafka-connectを使ってKafkaのデータをSnowflakeに流す
+Snowflakeで[権限を設定したユーザー](https://docs.snowflake.com/en/user-guide/kafka-connector-install#required-privileges)を作成しておく必要がある
+Kafka ConnecterはKeyPair認証に依存するため、この[作業](https://docs.snowflake.com/en/user-guide/kafka-connector-install#using-key-pair-authentication-key-rotation)も必要
+
 1. kafka-connectを起動
     ```shell
     docker compose up -d kafka-connect
@@ -63,14 +66,6 @@ curl -XGET http://localhost:8083/connectors # コネクタの登録ができて�
     open https://app.snowflake.com/ # 見たいテーブルまで行き、テーブルの権限を確認し問題なければ DataPreviewで確認する
     ```
 
-## TODO
-- 今はJsonがそのまま入ってるけどDBスキーマの形でいれたい(調査中)
-- スキーマ変更にどうやって追従するか(調査中)
-- 画面orAPIからコネクタ登録できるようにする
-  - コネクタのAPIに付いて調査、更新や削除の仕方
-- kafka connectのスタンドアローンモードと分散モード
-- Avroとスキーマレジストラ
-
 ## 参考リンク
 ### Debezium
 #### Debezium Server
@@ -80,9 +75,11 @@ curl -XGET http://localhost:8083/connectors # コネクタの登録ができて�
 
 ### Snowflake
 #### Kafka Connect
+- [Kafka Connectとは？](https://docs.confluent.io/platform/current/connect/index.html)
 - [API](https://docs.confluent.io/platform/current/connect/references/restapi.html)
 - [DockerImage](https://hub.docker.com/r/confluentinc/cp-kafka-connect)
 - [コネクターの登録はCLIからもできる](https://docs.confluent.io/confluent-cli/current/command-reference/connect/cluster/confluent_connect_cluster_create.html)
+- [TaskとWoker](https://ujun.hatenablog.com/entry/2019/03/31/154840)
 #### Snowflake Sink Connect
 - [Snowflakeにsinkする場合の資料](https://docs.snowflake.com/en/user-guide/kafka-connector)
 - [一連の設定方法などが全部書いてある](https://docs.snowflake.com/en/user-guide/kafka-connector-install)
@@ -91,7 +88,7 @@ curl -XGET http://localhost:8083/connectors # コネクタの登録ができて�
   - https://mvnrepository.com/artifact/com.snowflake/snowflake-kafka-connector
 - [Snowflake Sink Connector for Confluent Cloud](https://docs.confluent.io/cloud/current/connectors/cc-snowflake-sink/cc-snowflake-sink.html)
 - [DockerCompose作成の参考](https://github.com/snowflakedb/snowflake-kafka-connector/tree/master)
-
+- [Kafka ConnectがTasksを分散する様子](https://ujun.hatenablog.com/entry/2019/03/31/154840)
 
 ##### Kafka Connector with Snowpipe(Batch)
   - [設定値について](https://docs.snowflake.com/en/user-guide/kafka-connector-install#configuring-the-kafka-connector)
